@@ -16,17 +16,13 @@ class EditAdm extends MY_Controller {
             // echo'<pre>';var_dump($this->input->post(),$_FILES);exit;
             $this->form_validation->set_rules('item_name', 'Name', 'required');
             $this->form_validation->set_rules('item_price_customer', 'Customer price', 'required');
-            $this->form_validation->set_rules('item_price_kart', 'Hawker price', 'required');
             $this->form_validation->set_rules('max_order_qty', 'Max order qty', 'required');
-            $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+            // $this->form_validation->set_rules('unit_id', 'Unit', 'required');
             $this->form_validation->set_rules('category_id', 'Category', 'required');
             if($this->form_validation->run() == true){
                 $unlink="";
                 $data=$this->input->post();
-                $data['buying_qtys']=explode(',',$data['buying_qtys']);
-                sort($data['buying_qtys']);
-                $data['buying_qtys']=implode('|',$data['buying_qtys']);
-                $data['modified']=date('Y-m-d H:i:s');
+                $data['updated_at']=date('Y-m-d H:i:s');
                 if( $_FILES['img']['name']!=null ){
                     $path ='assets/images/items';
                     $initialize = array(
@@ -214,11 +210,11 @@ class EditAdm extends MY_Controller {
         {
             if($current_stat==0){
                 $data['is_active']=1;
-                $data['modified']=date('Y-m-d H:i:s');
+                $data['updated_at']=date('Y-m-d H:i:s');
             }
             else{
                 $data['is_active']=0;
-                $data['modified']=date('Y-m-d H:i:s');
+                $data['updated_at']=date('Y-m-d H:i:s');
             }
             $status= $this->edit->updateInfoById('items_master',$data,'id', $id);
             if($status){
@@ -319,11 +315,11 @@ class EditAdm extends MY_Controller {
         {
             if($current_stat==0){
                 $data['is_active']=1;
-                $data['modified']=date('Y-m-d H:i:s');
+                $data['updated_at']=date('Y-m-d H:i:s');
             }
             else{
                 $data['is_active']=0;
-                $data['modified']=date('Y-m-d H:i:s');
+                $data['updated_at']=date('Y-m-d H:i:s');
             }
             $status= $this->edit->updateInfoById('users',$data,'id', $id);
             if($status){
@@ -376,7 +372,6 @@ class EditAdm extends MY_Controller {
             
                 $updateArray[] = array(
                     'id'=>$this->input->post('id')[$x],
-                    'item_price_kart' => $this->input->post('item_price_kart')[$x],
                     'item_price_customer' => $this->input->post('item_price_customer')[$x]
                 );
             }

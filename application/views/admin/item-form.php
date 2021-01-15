@@ -34,7 +34,7 @@
                                             <div class="row">
                                                 <div class="col-sm-6 form-group">
                                                     <label class="dFormLabel">Item name:</label>
-                                                    <input type="text" name="item_name" value="<?=isset($data)?$data->item_name:''?>" class="form-control" required>
+                                                    <input type="text" name="item_name" value="<?=isset($data)?$data->item_name:''?>" class="form-control" placeholder="Example : Kashmiri Apple - 1 kg " required>
                                                 </div>
 
                                                 <div class="col-sm-6 form-group">
@@ -57,7 +57,7 @@
                                                     </fieldset>
                                                 </div>
 
-                                                <div class="col-sm-6 form-group">
+                                                <!-- <div class="col-sm-6 form-group">
                                                     <label for="basicInputFile">Select Unit:</label>
                                                     <select name="unit_id" class="select form-control" required>
                                                         <option value="">-- Choose one unit --</option>
@@ -65,25 +65,15 @@
                                                             <option value="<?=$u->id?>" <?=isset($data)?($data->unit_id==$u->id?' selected':''):''?>><?=$u->unit_name?></option>
                                                         <?php }?>
                                                     </select>
-                                                </div>
-
-                                                <div class="col-sm-6 form-group">
-                                                    <label>Buying qtys:</label>
-                                                    <input name="buying_qtys" id="tags-input" data-role="tagsinput" class="form-control" required>
-                                                </div>
+                                                </div> -->
 
                                                 <div class="col-sm-6 form-group">
                                                     <label>Max order qty:</label>
-                                                    <input type="number" name="max_order_qty" value="<?=isset($data)?$data->max_order_qty:''?>" class="form-control" step="0.01" required>
+                                                    <input type="number" name="max_order_qty" value="<?=isset($data)?$data->max_order_qty:''?>" class="form-control" required>
                                                 </div>
 
                                                 <div class="col-sm-6 form-group">
-                                                    <label>Price per unit (for hawker):</label>
-                                                    <input type="number" name="item_price_kart" value="<?=isset($data)?$data->item_price_kart:''?>" step="0.01" class="form-control" required>
-                                                </div>
-
-                                                <div class="col-sm-6 form-group">
-                                                    <label>Price per unit (for customer):</label>
+                                                    <label>Price:</label>
                                                     <input type="number" name="item_price_customer" value="<?=isset($data)?$data->item_price_customer:''?>" step="0.01" class="form-control" required>
                                                 </div>
                                             </div>
@@ -103,26 +93,3 @@
         </div>
     </div>
     <!-- END: Content-->
-
-    <script src="<?=base_url()?>app-assets/vendors/js/tags/bootstrap-tagsinput.js"></script>
-    <script>
-        $('#tags-input').tagsinput({
-            confirmKeys: [13, 188]
-        });
-        <?php if(isset($data)){?>
-            var js_array =<?php echo json_encode(explode('|',$data->buying_qtys))?>;
-            js_array.forEach(myFunction);
-            function myFunction(item, index) {
-                $('#tags-input').tagsinput('add', item);
-            }
-        <?php } else{?>
-            $('#tags-input').tagsinput('add', '0.25');
-            $('#tags-input').tagsinput('add', '0.5');
-            $('#tags-input').tagsinput('add', '0.75');
-            $('#tags-input').tagsinput('add', '1');
-            $('#tags-input').tagsinput('add', '2');
-            $('#tags-input').tagsinput('add', '3');
-            $('#tags-input').tagsinput('add', '4');
-            $('#tags-input').tagsinput('add', '5');
-        <?php }?>
-    </script>

@@ -87,6 +87,10 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 // CUSTOM CONSTANTS
+$http = 'http'.((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')?'s':'').'://';
+$fo = str_replace("index.php","", $_SERVER['SCRIPT_NAME']);
+$base  = "$http".$_SERVER['SERVER_NAME'].$fo;
+defined('BASE_URL')      OR define('BASE_URL', $base);
 
-defined('MAIN_DOMAIN')      OR define('MAIN_DOMAIN', 'http://localhost/cropicle/');
+defined('MAIN_DOMAIN')      OR define('MAIN_DOMAIN', $base);
 defined('KART_DOMAIN')      OR define('KART_DOMAIN', 'http://localhost/kart.cropicle/');

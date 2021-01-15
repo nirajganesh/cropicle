@@ -38,9 +38,8 @@
                                                     <th>Item ID</th>
                                                     <th>Image</th>
                                                     <th>Item name</th>
-                                                    <th>Unit name</th>
-                                                    <th>Hawker price</th>
-                                                    <th>Customer price</th>
+                                                    <!-- <th>Unit name</th> -->
+                                                    <th>Price</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
@@ -49,10 +48,9 @@
                                             <?php foreach($data as $d){?>
                                                 <tr>
                                                     <td><?=$d->id?></td>
-                                                    <td><img src="<?=base_url('assets/images/items/').$d->item_img?>" alt="<?=$d->item_name?>" width="80"></td>
+                                                    <td><img src="<?=base_url('assets/images/items/').$d->item_img?>" alt="<?=$d->item_name?>" height="60"></td>
                                                     <td><?=$d->item_name?></td>
-                                                    <td><?=$d->unit_short_name?></td>
-                                                    <td><?=$d->item_price_kart?>/-</td>
+                                                    <!-- <td><?=$d->unit_short_name?></td> -->
                                                     <td><?=$d->item_price_customer?>/-</td>
                                                     <?php if($d->is_active==1){?>
                                                         <td class="text-success">Active</td>

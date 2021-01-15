@@ -50,23 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['translate_uri_dashes'] = FALSE;
-$route['default_controller'] = 'Home';
+$route['default_controller'] = 'Admin';
 $route['sitemap.xml'] = 'Sitemap';
 $route['404_override'] = 'Error404';
-
-$route['forgot-password'] = 'Login/forgot';
-$route['sign-up'] = 'Login/register';
-$route['registered'] = 'Login/regSuccess';
-$route['registration-error'] = 'Login/regError';
-$route['logout'] = 'Login/logout';
-$route['profile'] = 'Home/profile';
-$route['manage-kart'] = 'Home/manageKart';
-$route['demand-lists'] = 'Home/demandLists';
-$route['demand-form'] = 'Home/demandForm';
-$route['demand-form/(:num)'] = 'Home/editDemand/$1';
-$route['orders'] = 'Home/orders';
-$route['payments'] = 'Home/payments';
-$route['update-stock'] = 'Edit/updateStock';
 
 $route['admin'] = 'Admin';
 $route['logout-admin'] = 'AdminLogin/logout';
@@ -91,22 +77,11 @@ $route['edit-loc/(:num)'] = 'Admin/editLoc/$1';
 $route['toggle-loc-status/(:num)/(:num)'] = 'EditAdm/locStatus/$1/$2';
 $route['delete-loc/(:num)'] = 'DeleteAdm/location/$1';
 
-$route['karts'] = 'Admin/kartUsers';
-$route['toggle-kart-status/(:num)/(:num)'] = 'EditAdm/kartStatus/$1/$2';
-$route['toggle-user-status/(:num)/(:num)'] = 'EditAdm/userStatus/$1/$2';
-$route['delete-kart/(:num)'] = 'DeleteAdm/kart/$1';
-$route['delete-user/(:num)'] = 'DeleteAdm/user/$1';
-
-$route['kart-orders'] = 'Admin/kartOrders';
-$route['delivered-kart-orders'] = 'Admin/delvKartOrders';
-$route['rejected-kart-orders'] = 'Admin/rejKartOrders';
-$route['kart-payments'] = 'Admin/kartPayments';
-
 $route['users'] = 'Admin/Users';
 $route['new-demand'] = 'Admin/createUserDemand';
-$route['user-demands'] = 'Admin/userDemands';
-$route['approved-user-demands'] = 'Admin/apprUserDemands';
-$route['rejected-user-demands'] = 'Admin/rejUserDemands';
+$route['orders/pending'] = 'Admin/ordersPending';
+$route['orders/approved'] = 'Admin/ordersApproved';
+$route['orders/rejected'] = 'Admin/ordersRejected';
 $route['set-delivered/(:num)'] = 'EditAdm/setDelivered/$1';
 
 $route['reports'] = 'Reports';
@@ -119,3 +94,18 @@ $route['del-banner/(:num)'] = 'DeleteAdm/delBanner/$1';
 $route['notice'] = 'Admin/Notice';
 $route['edit-notice/(:num)'] = 'Admin/editNotice/$1';
 $route['toggle-notice-status/(:num)/(:num)'] = 'EditAdm/noticeStatus/$1/$2';
+
+
+// $route['forgot-password'] = 'Login/forgot';
+// $route['sign-up'] = 'Login/register';
+// $route['registered'] = 'Login/regSuccess';
+// $route['registration-error'] = 'Login/regError';
+// $route['logout'] = 'Login/logout';
+// $route['profile'] = 'Home/profile';
+// $route['manage-kart'] = 'Home/manageKart';
+// $route['demand-lists'] = 'Home/demandLists';
+// $route['demand-form'] = 'Home/demandForm';
+// $route['demand-form/(:num)'] = 'Home/editDemand/$1';
+// $route['orders'] = 'Home/orders';
+// $route['payments'] = 'Home/payments';
+// $route['update-stock'] = 'Edit/updateStock';

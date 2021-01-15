@@ -14,17 +14,12 @@ class AddAdm extends MY_Controller {
         {
             $this->form_validation->set_rules('item_name', 'Name', 'required');
             $this->form_validation->set_rules('item_price_customer', 'Customer price', 'required');
-            $this->form_validation->set_rules('item_price_kart', 'Hawker price', 'required');
-            $this->form_validation->set_rules('buying_qtys', 'Buying Quantities', 'required');
             $this->form_validation->set_rules('max_order_qty', 'Max order qty', 'required');
-            $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+            // $this->form_validation->set_rules('unit_id', 'Unit', 'required');
             $this->form_validation->set_rules('category_id', 'Category', 'required');
             if($this->form_validation->run() == true){
                 $imagename = 'defaultItem.jpg';
                 $data=$this->input->post();
-                $data['buying_qtys']=explode(',',$data['buying_qtys']);
-                sort($data['buying_qtys']);
-                $data['buying_qtys']=implode('|',$data['buying_qtys']);
                 
                 // echo'<pre>';var_dump($data);exit;
                 if( $_FILES['img']['name']!=null ){

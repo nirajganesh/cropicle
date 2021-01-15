@@ -42,7 +42,7 @@ class AdminLogin extends MY_Controller {
                 $this->redirectIfAdminLoggedIn();
             }
             else{
-                $response['errors'] .= "Invalid credentials";
+                $response['errors'] .= "Invalid Mobile no. or Password";
             }
         }
         $this->load->view('admin/login',$response);

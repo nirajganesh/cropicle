@@ -12,13 +12,10 @@ class DeleteAdm extends MY_Controller {
 
         public function item($id)
         {
-            $itm= $this->fetch->getInfoById('items_master','id',$id);
-            $status= $this->delete->deleteById('items_master','id',$id);
+            // SOFT DELETE
+            $this->load->model('EditModel','edit');
+            $status= $this->edit->updateInfoById('items_master',['is_deleted'=>'1'],'id', $id);
             if($status){
-                if($itm->item_img!='defaultItem.jpg'){
-                    $path= 'assets/images/items/'.$itm->item_img;
-                    unlink($path);
-                }
                 $this->session->set_flashdata('success','Item deleted!');
                 redirect('items-master');
             }
@@ -26,6 +23,22 @@ class DeleteAdm extends MY_Controller {
                 $this->session->set_flashdata('failed','Error!');
                 redirect('items-master');
             }
+
+            // HARD DELETE
+            // $itm= $this->fetch->getInfoById('items_master','id',$id);
+            // $status= $this->delete->deleteById('items_master','id',$id);
+            // if($status){
+            //     if($itm->item_img!='defaultItem.jpg'){
+            //         $path= 'assets/images/items/'.$itm->item_img;
+            //         unlink($path);
+            //     }
+            //     $this->session->set_flashdata('success','Item deleted!');
+            //     redirect('items-master');
+            // }
+            // else{
+            //     $this->session->set_flashdata('failed','Error!');
+            //     redirect('items-master');
+            // }
         }
 
         public function category($id)
@@ -93,13 +106,14 @@ class DeleteAdm extends MY_Controller {
         {
             $status= $this->delete->deleteById('users','id',$id);
             $status= $this->delete->deleteById('user_info','user_id',$id);
+            $status= $this->delete->deleteById('user_address','user_id',$id);
             if($status){
                 $this->session->set_flashdata('success','user deleted!');
-                redirect('karts');
+                redirect('users');
             }
             else{
                 $this->session->set_flashdata('failed','Error!');
-                redirect('karts');
+                redirect('users');
             }
         }
 

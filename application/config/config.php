@@ -23,7 +23,10 @@ ob_start();
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/kart.cropicle/';
+$http = 'http'.((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')?'s':'').'://';
+$fo = str_replace("index.php","", $_SERVER['SCRIPT_NAME']);
+$base  = "$http".$_SERVER['SERVER_NAME'].$fo;
+$config['base_url'] = BASE_URL;
 
 /*
 |--------------------------------------------------------------------------

@@ -35,7 +35,6 @@
                                                     <th>User ID</th>
                                                     <th>Name</th>
                                                     <th>Contact no.</th>
-                                                    <th>E-mail</th>
                                                     <th>Registered on</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
@@ -47,8 +46,7 @@
                                                     <td><?=$d->id?></td>
                                                     <td><?=$d->name?></td>
                                                     <td><?=$d->mobile_no?></td>
-                                                    <td><?=$d->email?></td>
-                                                    <td><?=date('d-M-Y',strtotime($d->created))?></td>
+                                                    <td><?=date('d-M-Y',strtotime($d->created_at))?></td>
                                                     <?php if($d->is_active==1){?>
                                                         <td class="text-success">Active</td>
                                                     <?php } else {?>
@@ -78,7 +76,7 @@
 
     
     <div class="modal fade " id="orderModal" tabindex="-1" role="dialog" aria-labelledby="User Modal" aria-modal="true">
-        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title" id="exampleModalLongTitle">User details</h6>

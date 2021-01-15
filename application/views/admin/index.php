@@ -16,113 +16,81 @@
                         </div>
                     </div>
                     <div class="row">
-
-                        
-<div class="col-sm-12">
-    <div class="card">
-        <div class="card-header d-flex flex-row justify-content-between">
-            <h4 class="card-title">Today's demands &nbsp;<small class="text-muted">(<?= date('d-M-y')?>)</small> </h4>
-            <a href="user-demands" class="btn btn-light-primary btn-sm">See all</a>
-        </div>
-        <div class="card-content">
-            <div class="card-body card-dashboard">
-                <div class="table-responsive">
-                    <table class="table recent-dt">
-                        <thead>
-                            <tr>
-                                <th>Order by</th>
-                                <th>Amount</th>
-                                <th>Address</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach($demands as $de){?>
-                            <tr>
-                                <td><?=$de->name?> <br> (<?=$de->mobile_no?>)</td>
-                                <td>₹<?=$de->demand_amount?>/- </td>
-                                <td><?=$de->address?> </td>
-                                <td><?=$de->status?> </td>
-                            <?php if($de->status=='PENDING'){?>
-                                <td class='d-flex pr-0 pl-1 py-1'>
-                                    <span data-id='<?=$de->id?>' data-undo='normal' class="pendingDemandReject mr-1">
-                                        <a href="javascript:;" data-toggle="tooltip" title="Reject"><i class="badge-circle badge-circle-light-danger bx bx-x font-medium-5"></i></a>
-                                    </span>
-                                    <span data-id='<?=$de->id?>' data-undo='normal' class="pendingDemandApprove">
-                                        <a href="javascript:;" data-toggle="tooltip" title="Approve"><i class="badge-circle badge-circle-light-success bx bx-check font-medium-5"></i></a>
-                                    </span>
-                                </td>
-                            <?php } else if($de->status=='APPROVED'){?>
-                                <td class='d-flex pr-0 pl-1 py-1'>
-                                    <span data-id='<?=$de->id?>' class="approvedDemandDetails">
-                                        <a href="javascript:;" data-toggle="tooltip" title="See details"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle text-primary font-medium-5"></i></a>
-                                    </span>
-                                </td>
-                            <?php } else{?>
-                                <td class='d-flex pr-0 pl-1 py-1    '>
-                                    <span data-id='<?=$de->id?>' class="rejectedDemandDetails">
-                                        <a href="javascript:;" data-toggle="tooltip" title="See details"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle text-primary font-medium-5"></i></a>
-                                    </span>
-                                </td>
-                            <?php }?>
-                            </tr>
-                            <?php }?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header d-flex flex-row justify-content-between">
+                                    <h4 class="card-title">Today's orders &nbsp;<small class="text-muted">(<?= date('d-M-y')?>)</small> </h4>
+                                    <a href="user-demands" class="btn btn-light-primary btn-sm">See all</a>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body card-dashboard">
+                                        <div class="table-responsive">
+                                            <table class="table recent-dt">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Order by</th>
+                                                        <th>Amount</th>
+                                                        <th>Address</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php if (isset($demands) && count($demands)) { 
+                                                    foreach($demands as $de){?>
+                                                    <tr>
+                                                        <td><?=$de->name?> <br> (<?=$de->mobile_no?>)</td>
+                                                        <td>₹<?=$de->demand_amount?>/- </td>
+                                                        <td><?=$de->address?> </td>
+                                                        <td><?=$de->status?> </td>
+                                                    <?php if($de->status=='PENDING'){?>
+                                                        <td class='d-flex pr-0 pl-1 py-1'>
+                                                            <span data-id='<?=$de->id?>' data-undo='normal' class="pendingDemandReject mr-1">
+                                                                <a href="javascript:;" data-toggle="tooltip" title="Reject"><i class="badge-circle badge-circle-light-danger bx bx-x font-medium-5"></i></a>
+                                                            </span>
+                                                            <span data-id='<?=$de->id?>' data-undo='normal' class="pendingDemandApprove">
+                                                                <a href="javascript:;" data-toggle="tooltip" title="Approve"><i class="badge-circle badge-circle-light-success bx bx-check font-medium-5"></i></a>
+                                                            </span>
+                                                        </td>
+                                                    <?php } else if($de->status=='APPROVED'){?>
+                                                        <td class='d-flex pr-0 pl-1 py-1'>
+                                                            <span data-id='<?=$de->id?>' class="approvedDemandDetails">
+                                                                <a href="javascript:;" data-toggle="tooltip" title="See details"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle text-primary font-medium-5"></i></a>
+                                                            </span>
+                                                        </td>
+                                                    <?php } else{?>
+                                                        <td class='d-flex pr-0 pl-1 py-1    '>
+                                                            <span data-id='<?=$de->id?>' class="rejectedDemandDetails">
+                                                                <a href="javascript:;" data-toggle="tooltip" title="See details"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle text-primary font-medium-5"></i></a>
+                                                            </span>
+                                                        </td>
+                                                    <?php }?>
+                                                    </tr>
+                                                    <?php }
+                                                    }?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-xl-2 col-md-4 col-sm-6">
                             <a href="<?=base_url('user-demands')?>" class="card text-center">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
-                                            <i class="bx bx-tag font-medium-5"></i>
+                                        <div class="badge-circle badge-circle-lg badge-circle-dark mx-auto my-1">
+                                            <i class="bx bx-cart font-medium-5"></i>
                                         </div>
-                                        <p class="text-muted mb-0 line-ellipsis">User demands</p>
+                                        <p class="text-muted mb-0 line-ellipsis">Orders</p>
                                         <h2 class="mb-0 position-relative left-0">
-                                            <?=$customer_demands?>
+                                            <?=$orders?>
                                         </h2>
                                         <div class="chart-info d-flex justify-content-between mb-75 mt-2">
                                             <div class="d-flex align-items-center">
                                                 <i class="bullet bullet-xs bullet-success"></i>
                                                 <span class="text-muted text-bold-600 ml-50">Approved</span>
-                                            </div>
-                                            <div class="text-muted"><?=$appr_demands?></div>
-                                        </div>
-                                        <div class="chart-info d-flex justify-content-between mb-75">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bullet bullet-xs bullet-danger"></i>
-                                                <span class="text-muted text-bold-600 ml-50">Rejected</span>
-                                            </div>
-                                            <div class="text-muted"><?=$rej_demands?></div>
-                                        </div>
-                                        <?php if($new_demands>0){?>
-                                            <span class="badge badge-danger badge-up badge-glow badge-round mt-2 mr-1 font-small-1"><?=$new_demands?> new</span>
-                                        <?php }?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-md-4 col-sm-6">
-                            <a href="<?=base_url('kart-orders')?>" class="card text-center">
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
-                                            <i class="bx bx-shopping-bag font-medium-5"></i>
-                                        </div>
-                                        <p class="text-muted mb-0 line-ellipsis">Kart orders</p>
-                                        <h2 class="mb-0"><?=$orders?></h2>
-                                        <div class="chart-info d-flex justify-content-between mb-75 mt-2">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bullet bullet-xs bullet-success"></i>
-                                                <span class="text-muted text-bold-600 ml-50">Delivered</span>
                                             </div>
                                             <div class="text-muted"><?=$appr_orders?></div>
                                         </div>
@@ -134,7 +102,7 @@
                                             <div class="text-muted"><?=$rej_orders?></div>
                                         </div>
                                         <?php if($new_orders>0){?>
-                                            <span class="badge badge-danger badge-up badge-glow badge-round mt-2 mr-1 font-small-5"><?=$new_orders?> new</span>
+                                            <span class="badge badge-danger badge-up badge-glow badge-round mt-2 mr-1 font-small-1"><?=$new_orders?> new</span>
                                         <?php }?>
                                     </div>
                                 </div>
@@ -144,10 +112,10 @@
                             <a href="<?=base_url('items-master')?>" class="card text-center">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
+                                        <div class="badge-circle badge-circle-lg badge-circle-warning mx-auto my-1">
                                             <i class="bx bx-data font-medium-5"></i>
                                         </div>
-                                        <p class="text-muted mb-0 line-ellipsis">No. of items</p>
+                                        <p class="text-muted mb-0 line-ellipsis">No. of products</p>
                                         <h2 class="mb-0"><?=$items?></h2>
                                         <div class="chart-info d-flex justify-content-between mb-75 mt-2">
                                             <div class="d-flex align-items-center">
@@ -168,64 +136,10 @@
                             </a>
                         </div>
                         <div class="col-xl-2 col-md-4 col-sm-6">
-                            <a href="<?=base_url('locations-master')?>" class="card text-center">
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
-                                            <i class="bx bx-map font-medium-5"></i>
-                                        </div>
-                                        <p class="text-muted mb-0 line-ellipsis">No. of Locations</p>
-                                        <h2 class="mb-0"><?=$locations?></h2>
-                                        <div class="chart-info d-flex justify-content-between mb-75 mt-2">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bullet bullet-xs bullet-success mr-50"></i>
-                                                <span class="text-muted text-bold-600 ml-50">Active</span>
-                                            </div>
-                                            <div class="text-muted"><?=$activeLoc?></div>
-                                        </div>
-                                        <div class="chart-info d-flex justify-content-between mb-75">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bullet bullet-xs bullet-secondary mr-50"></i>
-                                                <span class="text-muted text-bold-600 ml-50">Inactive</span>
-                                            </div>
-                                            <div class="text-muted"><?=$inactiveLoc?></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-md-4 col-sm-6">
-                            <a href="<?=base_url('karts')?>" class="card text-center">
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto my-1">
-                                            <i class="bx bx-cart font-medium-5"></i>
-                                        </div>
-                                        <p class="text-muted mb-0 line-ellipsis">Regd. Karts</p>
-                                        <h2 class="mb-0"><?=$karts?></h2>
-                                        <div class="chart-info d-flex justify-content-between mb-75 mt-2">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bullet bullet-xs bullet-success mr-50"></i>
-                                                <span class="text-muted text-bold-600 ml-50">Active</span>
-                                            </div>
-                                            <div class="text-muted"><?=$activeKarts?></div>
-                                        </div>
-                                        <div class="chart-info d-flex justify-content-between mb-75">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bullet bullet-xs bullet-secondary mr-50"></i>
-                                                <span class="text-muted text-bold-600 ml-50">Inactive</span>
-                                            </div>
-                                            <div class="text-muted"><?=$inactiveKarts?></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xl-2 col-md-4 col-sm-6">
                             <a href="<?=base_url('users')?>" class="card text-center">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
+                                        <div class="badge-circle badge-circle-lg badge-circle mx-auto my-1">
                                             <i class="bx bx-user font-medium-5"></i>
                                         </div>
                                         <p class="text-muted mb-0 line-ellipsis">Regd. Users</p>

@@ -138,172 +138,29 @@
         });
     });
 
-    $(".order-dt").on("click", ".orderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Home/orderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".pendingOrderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/pOrderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-                $(".touchspin").TouchSpin({
-                    buttondown_class: "btn btn-primary",
-                    buttonup_class: "btn btn-primary",
-                  });
-                
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".deliveredOrderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/dOrderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".rejectedOrderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/rOrderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".kartPendingOrderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Home/pOrderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-                $(".touchspin").TouchSpin({
-                    buttondown_class: "btn btn-primary",
-                    buttonup_class: "btn btn-primary",
-                  });
-                
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".kartDeliveredOrderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Home/dOrderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".kartRejectedOrderOpen", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Home/rOrderDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-
-    $(".order-dt").on("click", ".pendingDemandApprove", function(){
+    
+    $(".order-dt").on("click", ".pendingOrderApprove", function(){
         var id=$(this).data('id');
         var undo=$(this).data('undo');
         $.ajax({
-            url: 'Admin/pDemandApprove',
+            url: loc+"/Admin/pOrderApprove",
             type:'post',
             data: {id: id, undo: undo},
             beforeSend : function(){
                 $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
                 $('#orderModal').modal('show');
             },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
+            success: function(res){
+                $('#orderModal .modal-body').html(res);
                 $('#orderModal .modal-body textarea').focus();
             },
-            error: function(response){
+            error: function(res){
                 $('#orderModal .modal-body').html('Error !');
             }
         });
     });
 
-    $(".order-dt").on("click", ".pendingDemandReject", function(){
+    $(".order-dt").on("click", ".pendingOrderReject", function(){
         var id=$(this).data('id');
         var undo=$(this).data('undo');
         $.ajax({
@@ -382,6 +239,7 @@
     });
 
     
+
     $(".recent-dt").on("click", ".pendingDemandApprove", function(){
         var id=$(this).data('id');
         $.ajax({
@@ -421,7 +279,6 @@
             }
         });
     });
-
     
     $(".recent-dt").on("click", ".approvedDemandDetails", function(){
         var id=$(this).data('id');

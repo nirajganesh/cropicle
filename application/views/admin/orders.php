@@ -11,18 +11,41 @@
                     <div class="col-sm-5">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb p-0 mb-0">
-                                <li class="breadcrumb-item"><a href="<?=base_url('admin')?>"><i class="bx bx-home-alt"></i></a></li>
+                                <li class="breadcrumb-item"><a href="<?=base_url('Admin')?>"><i class="bx bx-home-alt"></i></a></li>
+                                <?php if($this->uri->segment(2)=='pending') {?>
                                 <li class="breadcrumb-item active">Pending Orders</li>
+                                <?php } elseif($this->uri->segment(2)=='approved') {?>
+                                <li class="breadcrumb-item active">Approved Orders</li>
+                                <?php } else {?>
+                                <li class="breadcrumb-item active">Rejected Orders</li>
+                                <?php } ?>
                             </ol>
                         </div>
                     </div>
                     <div class="col-sm-7 text-sm-right mt-sm-0 mt-2 text-center">
-                        <a href="<?=base_url()?>delivered-kart-orders" class="btn btn-sm btn-light-secondary mr-1">
-                            <i class="bullet bullet-xs bullet-success"></i> See delivered orders
-                        </a>
-                        <a href="<?=base_url()?>rejected-kart-orders" class="btn btn-sm btn-light-secondary mr-1 mt-1 mt-sm-0">
-                            <i class="bullet bullet-xs bullet-danger"></i> See rejected orders
-                        </a>
+                    
+                        <?php if($this->uri->segment(2)=='pending') {?>
+                            <a href="<?=base_url()?>orders/approved" class="btn btn-sm btn-light-secondary mr-1">
+                                <i class="bullet bullet-xs bullet-success"></i> See approved Orders
+                            </a>
+                            <a href="<?=base_url()?>orders/rejected" class="btn btn-sm btn-light-secondary mr-1 mt-1 mt-sm-0">
+                                <i class="bullet bullet-xs bullet-danger"></i> See rejected Orders
+                            </a>
+                        <?php } elseif($this->uri->segment(2)=='approved') {?>
+                            <a href="<?=base_url()?>orders/pending" class="btn btn-sm btn-light-secondary mr-1">
+                                <i class="bullet bullet-xs bullet-warning"></i> See pending Orders
+                            </a>
+                            <a href="<?=base_url()?>orders/rejected" class="btn btn-sm btn-light-secondary mr-1 mt-1 mt-sm-0">
+                                <i class="bullet bullet-xs bullet-danger"></i> See rejected Orders
+                            </a>
+                        <?php } else {?>
+                            <a href="<?=base_url()?>orders/approved" class="btn btn-sm btn-light-secondary mr-1">
+                                <i class="bullet bullet-xs bullet-success"></i> See approved Orders
+                            </a>
+                            <a href="<?=base_url()?>orders/pending" class="btn btn-sm btn-light-secondary mr-1 mt-1 mt-sm-0">
+                                <i class="bullet bullet-xs bullet-warning"></i> See pending Orders
+                            </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -32,7 +55,13 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title text-warning">Pending orders list</h4>
+                        <?php if($this->uri->segment(2)=='pending') {?>
+                            <h4 class="card-title text-warning">Pending Orders list</h4>
+                        <?php } elseif($this->uri->segment(2)=='approved') {?>
+                            <h4 class="card-title text-success">Approved Orders list</h4>
+                        <?php } else {?>
+                            <h4 class="card-title text-danger">Rejected Orders list</h4>
+                        <?php } ?>
                         </div>
                         <div class="card-content">
                             <div class="card-body card-dashboard">
@@ -41,22 +70,27 @@
                                         <thead>
                                             <tr>
                                                 <th>Order no.</th>
+                                                <th>Date</th>
                                                 <th>Ordered by</th>
-                                                <th>Order Date</th>
                                                 <th>Order Amount</th>
+                                                <th>Additional notes</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach($pending as $p){?>
+                                        <?php foreach($data as $p){?>
                                             <tr>
                                                 <td><?=$p->id?></td>
-                                                <td><?=$p->name?></td>
                                                 <td><?=date('d-M-Y',strtotime($p->date))?></td>
-                                                <td>Rs. <?=$p->total_amt?>/-</td>
-                                                <td class='d-flex'>
-                                                    <span data-id='<?=$p->id?>' class="pendingOrderOpen">
-                                                        <a href="#" data-toggle="tooltip" title="Approve/Reject"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle text-primary font-medium-1"></i></a>
+                                                <td><?=$p->name?><br>(<?=$p->mobile_no?>)</td>
+                                                <td>Rs. <?=$p->payable_amt?>/-</td>
+                                                <td><?=$p->additional_notes?></td>
+                                                <td class='d-flex px-0 py-1'>
+                                                    <span data-id='<?=$p->id?>' data-undo='normal' class="pendingOrderReject mr-1">
+                                                        <a href="javascript:;" data-toggle="tooltip" title="Reject"><i class="badge-circle badge-circle-light-danger bx bx-x font-medium-5"></i></a>
+                                                    </span>
+                                                    <span data-id='<?=$p->id?>' data-undo='normal' class="pendingOrderApprove">
+                                                        <a href="javascript:;" data-toggle="tooltip" title="Approve"><i class="badge-circle badge-circle-light-success bx bx-check font-medium-5"></i></a>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -73,7 +107,7 @@
     </div>
 </div>
 
-<div class="modal fade " id="orderModal" tabindex="-1" role="dialog" aria-labelledby="Order Modal" aria-modal="true">
+<div class="modal fade " id="orderModal" tabindex="-1" role="dialog" aria-labelledby="Demand Modal" aria-modal="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
