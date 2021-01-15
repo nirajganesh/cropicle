@@ -1,0 +1,20 @@
+{
+  "listItems": [
+    {"name":"Dashboard", "url":"dashboard-ecommerce.html","icon":"bx bx-desktop"},
+    {"name":"Orders", "url":"orders.html","icon":"bx bx-truck"},
+    {"name":"Payments", "url":"payments.html","icon":"bx bx-money"},
+    {"name":"Money", "url":"payments.html","icon":"bx bx-money"},
+    {"name":"User Profile", "url":"profile.html","icon":"bx bx-user"},
+    {"name":"Kart Profile", "url":"profile.html","icon":"bx bx-user"},
+    {"name":"Bank info", "url":"profile.html","icon":"bx bx-user"},
+    {"name":"User Email", "url":"profile.html","icon":"bx bx-envelope"},
+    {"name":"Change password", "url":"profile.html","icon":"bx bx-lock"},
+    {"name":"Add/Create Demand list", "url":"demand-form.html","icon":"bx bx-notepad"},
+    {"name":"All Demand list", "url":"demand-lists.html","icon":"bx bx-notepad"},
+    {"name":"Kart stock", "url":"manage-kart.html","icon":"bx bx-cog"},
+    {"name":"Update Kart stock", "url":"manage-kart.html","icon":"bx bx-cog"},
+    {"name":"Update user profile", "url":"profile.html","icon":"bx bx-user"}
+  ]
+}
+
+
