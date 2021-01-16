@@ -16,7 +16,7 @@ class GetModel extends CI_Model{
 
     public function orderDetails($id)
     {
-        $items=$this->db->select('od.qty, od.item_price_customer, i.item_name,')
+        $items=$this->db->select('od.qty, od.item_price_customer, i.item_name,i.item_img')
                         ->from('order_details od')
                         ->join('items_master i', 'i.id = od.item_id', 'LEFT')
                         // ->where('i.is_active','1')
@@ -75,7 +75,7 @@ class GetModel extends CI_Model{
     
     public function checkPendingOrders($user_id) 
     {
-            return $this->db->where('status','ORDERED')->where('user_id',$user_id)->get('orders')->num_rows();
+        return $this->db->where('status','ORDERED')->where('user_id',$user_id)->get('orders')->num_rows();
     }
 
 

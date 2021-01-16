@@ -138,7 +138,9 @@
         });
     });
 
-    
+
+    // ORDER MANAGEMENT BY ADMIn //
+
     $(".order-dt").on("click", ".pendingOrderApprove", function(){
         var id=$(this).data('id');
         var undo=$(this).data('undo');
@@ -164,56 +166,39 @@
         var id=$(this).data('id');
         var undo=$(this).data('undo');
         $.ajax({
-            url: 'Admin/pDemandReject',
+            url: loc+"/Admin/pOrderReject",
             type:'post',
             data: {id: id, undo: undo},
             beforeSend : function(){
                 $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
                 $('#orderModal').modal('show');
             },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
+            success: function(res){
+                $('#orderModal .modal-body').html(res);
                 $('#orderModal .modal-body textarea').focus();
             },
-            error: function(response){
+            error: function(res){
                 $('#orderModal .modal-body').html('Error !');
             }
         });
     });
 
-    $(".order-dt").on("click", ".approvedDemandDetails", function(){
+    $(".order-dt").on("click", ".orderDetails", function(){
         var id=$(this).data('id');
+        var undo=$(this).data('undo');
         $.ajax({
-            url: 'Admin/dDemandDetails',
+            url: loc+"/Admin/orderDetails",
             type:'post',
-            data: {id: id},
+            data: {id: id, undo: undo},
             beforeSend : function(){
                 $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
                 $('#orderModal').modal('show');
             },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
+            success: function(res){
+                $('#orderModal .modal-body').html(res);
+                $('#orderModal .modal-body textarea').focus();
             },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".order-dt").on("click", ".rejectedDemandDetails", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/rDemandDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
+            error: function(res){
                 $('#orderModal .modal-body').html('Error !');
             }
         });
@@ -237,99 +222,5 @@
             }
         });
     });
-
-    
-
-    $(".recent-dt").on("click", ".pendingDemandApprove", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/pDemandApprove',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-                $('#orderModal .modal-body textarea').focus();
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".recent-dt").on("click", ".pendingDemandReject", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/pDemandReject',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-                $('#orderModal .modal-body textarea').focus();
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-    
-    $(".recent-dt").on("click", ".approvedDemandDetails", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/dDemandDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    $(".recent-dt").on("click", ".rejectedDemandDetails", function(){
-        var id=$(this).data('id');
-        $.ajax({
-            url: 'Admin/rDemandDetails',
-            type:'post',
-            data: {id: id},
-            beforeSend : function(){
-                $('#orderModal .modal-body').html('<div class="d-flex justify-content-center align-items-center"><i class="bx bx-loader-alt bx-spin"> </i>&nbsp; Loading...</div>');
-                $('#orderModal').modal('show');
-            },
-            success: function(response){
-                $('#orderModal .modal-body').html(response);
-            },
-            error: function(response){
-                $('#orderModal .modal-body').html('Error !');
-            }
-        });
-    });
-
-    // $('#reportType').change(function() {
-    //     $(`
-    //     <label for=":">Select Item:</label>
-    //     <select name="type" class="form-control mb-1" required>
-    //         <option value="">-- Select report type --</option>
-    //         <option value="orders">User demands</option>
-    //         <option value="detailedOrders">User demands with details</option>
-    //         <option value="detailedOrders">Item wise User demands</option>
-    //         <option value="detailedOrders">Location wise user demands</option>
-    //     </select>
-    //     `).insertAfter('#reportType');
-    // });
-
 
 })(window);

@@ -172,25 +172,6 @@ class AddAdm extends MY_Controller {
                 }
                 $data['img_src']=$imagename;
 
-                if( $_FILES['img2']['name']!=null ){
-                    $path ='assets/images';
-                    $initialize = array(
-                        "upload_path" => $path,
-                        "allowed_types" => "jpg|jpeg|png|bmp",
-                        "remove_spaces" => TRUE
-                    );
-                    $this->load->library('upload', $initialize, 'imgupload2');
-                    $this->imgupload2->initialize($initialize);
-                    if (!$this->imgupload2->do_upload('img2')) {
-                        $this->session->set_flashdata('failed',trim(strip_tags($this->imgupload2->display_errors())));
-                        redirect('add-banner');
-                    }
-                    else {
-                        $imgdata = $this->imgupload2->data();
-                        $imagename = $imgdata['file_name'];
-                    } 
-                }
-                $data['img_src480w']=$imagename;
                 $status= $this->save->saveInfo('banner',$data);
                 if($status){
                     $this->session->set_flashdata('success','Banner added !' );

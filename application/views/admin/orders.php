@@ -32,18 +32,18 @@
                                 <i class="bullet bullet-xs bullet-danger"></i> See rejected Orders
                             </a>
                         <?php } elseif($this->uri->segment(2)=='approved') {?>
-                            <a href="<?=base_url()?>orders/pending" class="btn btn-sm btn-light-secondary mr-1">
-                                <i class="bullet bullet-xs bullet-warning"></i> See pending Orders
-                            </a>
                             <a href="<?=base_url()?>orders/rejected" class="btn btn-sm btn-light-secondary mr-1 mt-1 mt-sm-0">
                                 <i class="bullet bullet-xs bullet-danger"></i> See rejected Orders
                             </a>
-                        <?php } else {?>
-                            <a href="<?=base_url()?>orders/approved" class="btn btn-sm btn-light-secondary mr-1">
-                                <i class="bullet bullet-xs bullet-success"></i> See approved Orders
+                            <a href="<?=base_url()?>orders/pending" class="btn btn-sm btn-light-secondary mr-1">
+                                <i class="bullet bullet-xs bullet-warning"></i> See pending Orders
                             </a>
+                        <?php } else {?>
                             <a href="<?=base_url()?>orders/pending" class="btn btn-sm btn-light-secondary mr-1 mt-1 mt-sm-0">
                                 <i class="bullet bullet-xs bullet-warning"></i> See pending Orders
+                            </a>
+                            <a href="<?=base_url()?>orders/approved" class="btn btn-sm btn-light-secondary mr-1">
+                                <i class="bullet bullet-xs bullet-success"></i> See approved Orders
                             </a>
                         <?php } ?>
                     </div>
@@ -74,6 +74,9 @@
                                                 <th>Ordered by</th>
                                                 <th>Order Amount</th>
                                                 <th>Additional notes</th>
+                                                <?php if($this->uri->segment(2)=='rejected') {?>
+                                                <th>Rejection reason</th>
+                                                <?php } ?>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -85,13 +88,33 @@
                                                 <td><?=$p->name?><br>(<?=$p->mobile_no?>)</td>
                                                 <td>Rs. <?=$p->payable_amt?>/-</td>
                                                 <td><?=$p->additional_notes?></td>
+                                                <?php if($this->uri->segment(2)=='rejected') {?>
+                                                <td><?=$p->admin_remarks?></td>
+                                                <?php } ?>
                                                 <td class='d-flex px-0 py-1'>
+                                                
+                                                <?php if($this->uri->segment(2)=='pending') {?>
                                                     <span data-id='<?=$p->id?>' data-undo='normal' class="pendingOrderReject mr-1">
                                                         <a href="javascript:;" data-toggle="tooltip" title="Reject"><i class="badge-circle badge-circle-light-danger bx bx-x font-medium-5"></i></a>
                                                     </span>
                                                     <span data-id='<?=$p->id?>' data-undo='normal' class="pendingOrderApprove">
                                                         <a href="javascript:;" data-toggle="tooltip" title="Approve"><i class="badge-circle badge-circle-light-success bx bx-check font-medium-5"></i></a>
                                                     </span>
+                                                <?php } elseif($this->uri->segment(2)=='approved') {?>
+                                                    <span data-id='<?=$p->id?>' data-undo='normal' class="orderDetails">
+                                                        <a href="javascript:;" data-toggle="tooltip" title="See Details"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle font-medium-5"></i></a>
+                                                    </span>
+                                                    <!-- <span data-id='<?=$p->id?>' data-undo='normal' class="pendingOrderReject ml-1">
+                                                        <a href="javascript:;" data-toggle="tooltip" title="Reject"><i class="badge-circle badge-circle-light-danger bx bx-x font-medium-5"></i></a>
+                                                    </span> -->
+                                                <?php } else {?>
+                                                    <span data-id='<?=$p->id?>' data-undo='normal' class="orderDetails mr-1">
+                                                        <a href="javascript:;" data-toggle="tooltip" title="Reject"><i class="badge-circle badge-circle-light-secondary bx bx-info-circle font-medium-5"></i></a>
+                                                    </span>
+                                                    <!-- <span data-id='<?=$p->id?>' data-undo='normal' class="pendingOrderApprove">
+                                                        <a href="javascript:;" data-toggle="tooltip" title="Approve"><i class="badge-circle badge-circle-light-success bx bx-check font-medium-5"></i></a>
+                                                    </span> -->
+                                                <?php } ?>
                                                 </td>
                                             </tr>
                                         <?php }?>

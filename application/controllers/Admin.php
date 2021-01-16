@@ -14,10 +14,6 @@ class Admin extends MY_Controller {
 		$items=$this->fetch->record_count('items_master');
 		$activeItems=$this->fetch->record_count('items_master','is_active','1');
 		$inactiveItems=$this->fetch->record_count('items_master','is_active','0');
-		
-		$locations=$this->fetch->record_count('locations_master');
-		$activeLoc=$this->fetch->record_count('locations_master','is_active','1');
-		$inactiveLoc=$this->fetch->record_count('locations_master','is_active','0');
 
 		$customers=$this->fetch->record_count('users','role_id','3');
 		$activeCust=$this->fetch->record_count_arr('users',['is_active'=>'1','role_id'=>'3']);
@@ -36,9 +32,6 @@ class Admin extends MY_Controller {
 										'items'=>$items,
 										'activeItems'=>$activeItems,
 										'inactiveItems'=>$inactiveItems,
-										'locations'=>$locations,
-										'activeLoc'=>$activeLoc,
-										'inactiveLoc'=>$inactiveLoc,
 										'customers'=>$customers,
 										'activeCust'=>$activeCust,
 										'inactiveCust'=>$inactiveCust,
@@ -68,6 +61,20 @@ class Admin extends MY_Controller {
 		$this->load->view('admin/footer');
 	}
 
+	public function addBanner()
+	{
+		$this->load->view('admin/header',['title'=>'Add banner','submissionPath'=>base_url('AddAdm/addBanner')]);
+		$this->load->view('admin/banner-form');
+		$this->load->view('admin/footer');
+	}
+
+	public function editBanner($id)
+	{
+		$item=$this->fetch->getInfoById('banner','id',$id);
+		$this->load->view('admin/header',['title'=>'Edit banner','data'=>$item, 'submissionPath'=>base_url('EditAdm/editBanner/').$id]);
+		$this->load->view('admin/banner-form');
+		$this->load->view('admin/footer');
+	}
 
 	public function itemsMaster()
 	{
@@ -151,20 +158,6 @@ class Admin extends MY_Controller {
 		$this->load->view('admin/footer');
 	}
 
-	public function addBanner()
-	{
-		$this->load->view('admin/header',['title'=>'Add banner','submissionPath'=>base_url('AddAdm/addBanner')]);
-		$this->load->view('admin/banner-form');
-		$this->load->view('admin/footer');
-	}
-
-	public function editBanner($id)
-	{
-		$item=$this->fetch->getInfoById('banner','id',$id);
-		$this->load->view('admin/header',['title'=>'Edit banner','data'=>$item, 'submissionPath'=>base_url('EditAdm/editBanner/').$id]);
-		$this->load->view('admin/banner-form');
-		$this->load->view('admin/footer');
-	}
 
 	public function demandLists()
 	{
@@ -253,134 +246,101 @@ class Admin extends MY_Controller {
 		// echo'<pre>';var_dump($list);exit;
 		$response='
 		<div class="row mx-0">
-			<p class="text-dark col-sm-5 pl-1"> Order id. : <strong>'.$this->input->post('id').'</strong></p>
-			<p class="text-dark col-sm-7 text-sm-right pl-1 pl-sm-0">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
-		</div>
-		<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Name : '.$info->name.'</p>
-		</div>
-		<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Contact no. : '.$info->mobile_no.'</p>
+			<div class="col-sm-5">
+				<p class="text-dark"> Order id : <strong>'.$this->input->post('id').'</strong></p>
+				<p class="text-dark">Name : '.$info->name.'</p>
+				<p class="text-dark">Contact no. : '.$info->mobile_no.'</p>
+			</div>
+			<div class="col-sm-7">
+				<p class="text-dark">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
+				<p class="text-dark">
+					Address : '.$info->street.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
+				</p>
+			</div>
 		</div>
 		
-		<hr class="my-0">
-			<div class="row">
-				<div class="col-12 p-0 my-2 d-flex bg-dark py-1">
-					<div class="col-3 text-white"><strong>Item</strong></div>
-					<div class="col-4 text-white pl-sm-1 pl-0"><strong>Price</strong></div>
-					<div class="col-2 text-white pl-sm-1 pl-0"><strong>Qty</strong></div>
-					<div class="col-3 text-white"><strong>Total</strong></div>
-				</div>';
+		<hr class="mt-0 mb-3">';
 		foreach($demand as $i){
 			$response.='
-						<div class="col-12 p-0 mb-1 d-flex">
-							<div class="col-3">'.$i->item_name.' -</div>
-							<div class="col-4 pl-sm-1 pl-0">₹'.$i->item_price_customer.'</div>
-							<div class="col-2 pl-sm-1 pl-0">'.$i->qty.'</div>
-							<div class="col-3">₹'.$i->item_price_customer*$i->qty.'</div>
-						</div>';
-		}	
+			<div class="row ">
+				<div class="col-8 d-flex align-items-center pr-0">
+					<img clas="" src="'.MAIN_DOMAIN.'assets/images/items/'.$i->item_img.'" height="60" width="60" alt="img" style="object-fit:cover;">
+					<p class="pl-1 text-black">'.$i->item_name.' apple with some more text in a row <br> <small class="text-secondary">(₹ '.$i->item_price_customer.'/-)</small></p>
+				</div>
+				<div class="col-2 text-black">
+					<p class="">x '.$i->qty.' </p>
+				</div>
+				<div class="col-2 pl-0 text-black">
+					<p class="">₹'.$i->item_price_customer*$i->qty.'</p>
+				</div>
+			</div>
+			<br>';
+		}
 		$response.='
 				</div>
 				<div class="row mt-0 mx-0">
 					<mark class="col-sm-3 col-12 py-1">Order amount: ₹'.$info->payable_amt.'/-</mark> 
 				</div>
 				<div class="row mt-1 px-0 mx-0">
-					<div class="col py-1">Additional notes: '.$info->additional_notes.'</div>
+					<div class="col py-1">Additional notes: <span class="text-black">'.$info->additional_notes.'</span></div>
 				</div>
-				<form method="POST" action="EditAdm/approveDemand/'.$this->input->post('id').'">
-					<div class="row border mt-1 px-0 mx-0">';
-					if($this->input->post('undo')=='approve' || $this->input->post('undo')=='reject'){
-						$response.='
-						<textarea class="col py-1 form-control" name="admin_remarks" placeholder="Enter reason for approving this demand" required></textarea>
-						';
-					}
-					else{
-						$response.='
-						<textarea class="col py-1 form-control" name="admin_remarks" placeholder="Enter your remarks for this demand"></textarea>
-						';
-					}
-					$response.='</div>
+				<form method="POST" action="'.base_url().'/EditAdm/approveOrder/'.$this->input->post('id').'">
 					<div class="modal-footer px-0">
 						<button type="submit" class="btn btn-success">Approve</button>
 					</div>
-				<form>
+				</form>
 				
 				';
 		echo $response;
 	}
 	
 	// Pending orders for rejection (AJAX Modal)
-	public function pDemandReject()
+	public function pOrderReject()
 	{
-		$demand=$this->fetch->userDemandDetails($this->input->post('id'));
-		$info=$this->fetch->getDemandInfo($this->input->post('id'));
-		$loc_info=$this->fetch->getInfoById('locations_master','id',$info->location_id);
+		$demand=$this->fetch->orderDetails($this->input->post('id'));
+		$info=$this->fetch->orderInfo($this->input->post('id'));
 		// echo'<pre>';var_dump($list);exit;
 		$response='
 		<div class="row mx-0">
-			<p class="text-dark col-sm-5 pl-1"> Demand id. : <strong>'.$this->input->post('id').'</strong></p>
-			<p class="text-dark col-sm-7 text-sm-right pl-1 pl-sm-0">Demand date : '.date('d-M-Y',strtotime($info->created)).'</p>
-		</div>';
-		if($this->input->post('undo')=='approve'){
-			$response.='
-			<div class="row mx-0">
-				<p class="ml-1 text-dark">Status : <strong class="text-danger">'.$info->status.'</strong></p>
-			</div>';
-		}
-		elseif($this->input->post('undo')=='reject'){
-			$response.='
-			<div class="row mx-0">
-				<p class="ml-1 text-dark">Status : <strong class="text-success">'.$info->status.'</strong></p>
-			</div>';
-		}
-		else{
-			$response.='
-			<div class="row mx-0">
-				<p class="ml-1 text-dark">Status : <strong class="text-warning">'.$info->status.'</strong></p>
-			</div>';
-		}
-		$response.='<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Name : '.$info->name.'</p>
+			<div class="col-sm-5">
+				<p class="text-dark"> Order id : <strong>'.$this->input->post('id').'</strong></p>
+				<p class="text-dark">Name : '.$info->name.'</p>
+				<p class="text-dark">Contact no. : '.$info->mobile_no.'</p>
+			</div>
+			<div class="col-sm-7">
+				<p class="text-dark">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
+				<p class="text-dark">
+					Address : '.$info->street.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
+				</p>
+			</div>
 		</div>
-		<div class="row mx-0 pb-0 mb-0">
-		<p class="ml-1 text-dark">Contact no. : '.$info->phone_no.'</p>
-		</div>';
-		if($loc_info){
-			$response.='	<div class="row mx-0 pb-0 mb-0">
-					<p class="ml-1 text-dark">For location : '.$loc_info->area.', '.$loc_info->city.', '.$loc_info->state.' ('.$loc_info->pin_code.')</p>
-				</div>
-				<div class="row mx-0 pb-0 mb-0">
-					<p class="ml-1 text-dark">For address : '.$info->address.'</p>
-				</div>';
-		}
-		$response.='
-		<hr class="my-0">
-			<div class="row">
-				<div class="col-12 p-0 my-2 d-flex bg-dark py-1">
-					<div class="col-3 text-white"><strong>Item</strong></div>
-					<div class="col-4 text-white pl-sm-1 pl-0"><strong>Price</strong></div>
-					<div class="col-2 text-white pl-sm-1 pl-0"><strong>Qty</strong></div>
-					<div class="col-3 text-white"><strong>Total</strong></div>
-				</div>';
+		
+		<hr class="mt-0 mb-3">';
 		foreach($demand as $i){
 			$response.='
-						<div class="col-12 p-0 mb-1 d-flex">
-							<div class="col-3">'.$i->item_name.' -</div>
-							<div class="col-4 pl-sm-1 pl-0">₹'.$i->item_price_customer.'/'.$i->unit_short_name.'</div>
-							<div class="col-2 pl-sm-1 pl-0">'.$i->item_quantity.' '.$i->unit_short_name.' </div>
-							<div class="col-3">₹'.$i->item_price_customer*$i->item_quantity.'</div>
-						</div>';
-		}	
+			<div class="row ">
+				<div class="col-8 d-flex align-items-center pr-0">
+					<img clas="" src="'.MAIN_DOMAIN.'assets/images/items/'.$i->item_img.'" height="60" width="60" alt="img" style="object-fit:cover;">
+					<p class="pl-1 text-black">'.$i->item_name.' apple with some more text in a row <br> <small class="text-secondary">(₹ '.$i->item_price_customer.'/-)</small></p>
+				</div>
+				<div class="col-2 text-black">
+					<p class="">x '.$i->qty.' </p>
+				</div>
+				<div class="col-2 pl-0 text-black">
+					<p class="">₹'.$i->item_price_customer*$i->qty.'</p>
+				</div>
+			</div>
+			<br>';
+		}
 		$response.='
 				</div>
 				<div class="row mt-0 mx-0">
-					<mark class="col-sm-3 col-12 py-1">Amount: ₹'.$info->demand_amount.'/-</mark> 
+					<mark class="col-sm-3 col-12 py-1">Order amount: ₹'.$info->payable_amt.'/-</mark> 
 				</div>
 				<div class="row mt-1 px-0 mx-0">
-					<div class="col py-1">Customer remarks: '.$info->customer_remarks.'</div>
+					<div class="col py-1">Additional notes: <span class="text-black">'.$info->additional_notes.'</span></div>
 				</div>
-				<form method="POST" action="EditAdm/rejectDemand/'.$this->input->post('id').'">
+				<form method="POST" action="'.base_url().'/EditAdm/rejectOrder/'.$this->input->post('id').'">
 					<div class="row border mt-1 px-0 mx-0">';
 					if($this->input->post('undo')=='approve' || $this->input->post('undo')=='reject'){
 						$response.='
@@ -389,152 +349,77 @@ class Admin extends MY_Controller {
 					}
 					else{
 						$response.='
-						<textarea class="col py-1 form-control" name="admin_remarks" placeholder="Enter your remarks for this demand"></textarea>
+						<textarea class="col py-1 form-control" name="admin_remarks" placeholder="Enter your remarks for rejecting this order" required></textarea>
 						';
 					}
 					$response.='</div>
 					<div class="modal-footer px-0">
 						<button type="submit" class="btn btn-danger">Reject</button>
 					</div>
-				<form>
+				</form>
 				
 				';
 		echo $response;
 	}
 	
-	// Approved orders (AJAX Modal)
-	public function dDemandDetails()
+	// order details (AJAX Modal)
+	public function orderDetails()
 	{
-		$demand=$this->fetch->userDemandDetails($this->input->post('id'));
-		$info=$this->fetch->getDemandInfo($this->input->post('id'));
-		$loc_info=$this->fetch->getInfoById('locations_master','id',$info->location_id);
+		$demand=$this->fetch->orderDetails($this->input->post('id'));
+		$info=$this->fetch->orderInfo($this->input->post('id'));
 		// echo'<pre>';var_dump($list);exit;
 		$response='
 		<div class="row mx-0">
-			<p class="text-dark col-sm-5 pl-1"> Demand id. : <strong>'.$this->input->post('id').'</strong></p>
-			<p class="text-dark col-sm-7 text-sm-right pl-1 pl-sm-0">Demand date : '.date('d-M-Y',strtotime($info->created)).'</p>
+			<div class="col-sm-5">
+				<p class="text-dark"> Order id : <strong>'.$this->input->post('id').'</strong></p>
+				<p class="text-dark">Name : '.$info->name.'</p>
+				<p class="text-dark">Contact no. : '.$info->mobile_no.'</p>
+			</div>
+			<div class="col-sm-7">
+				<p class="text-dark">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
+				<p class="text-dark">
+					Address : '.$info->street.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
+				</p>
+			</div>
 		</div>
 		<div class="row mx-0">
-			<p class="ml-1 text-dark">Status : <strong class="text-success">'.$info->status.'</strong></p>
+			<div class="col">
+				<p class="text-dark"> Status : <strong>'.$info->status.'</strong></p>
+			</div>
 		</div>
-		<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Name : '.$info->name.'</p>
-		</div>
-		<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Contact no. : '.$info->phone_no.'</p>
-		</div>';
-		if($loc_info){
-			$response.='	<div class="row mx-0 pb-0 mb-0">
-					<p class="ml-1 text-dark">For location : '.$loc_info->area.', '.$loc_info->city.', '.$loc_info->state.' ('.$loc_info->pin_code.')</p>
-				</div>
-				<div class="row mx-0 pb-0 mb-0">
-					<p class="ml-1 text-dark">For address : '.$info->address.'</p>
-				</div>';
-		}
-		$response.='
-		<hr class="my-0">
-			<div class="row">
-				<div class="col-12 p-0 my-2 d-flex bg-dark py-1">
-					<div class="col-3 text-white"><strong>Item</strong></div>
-					<div class="col-4 text-white pl-sm-1 pl-0"><strong>Price</strong></div>
-					<div class="col-2 text-white pl-sm-1 pl-0"><strong>Qty</strong></div>
-					<div class="col-3 text-white"><strong>Total</strong></div>
-				</div>';
+		
+		<hr class="mt-0 mb-3">';
 		foreach($demand as $i){
 			$response.='
-						<div class="col-12 p-0 mb-1 d-flex">
-							<div class="col-3">'.$i->item_name.' -</div>
-							<div class="col-4 pl-sm-1 pl-0">₹'.$i->item_price_customer.'/'.$i->unit_short_name.'</div>
-							<div class="col-2 pl-sm-1 pl-0">'.$i->item_quantity.' '.$i->unit_short_name.' </div>
-							<div class="col-3">₹'.$i->item_price_customer*$i->item_quantity.'</div>
-						</div>';
-		}	
+			<div class="row ">
+				<div class="col-8 d-flex align-items-center pr-0">
+					<img clas="" src="'.MAIN_DOMAIN.'assets/images/items/'.$i->item_img.'" height="60" width="60" alt="img" style="object-fit:cover;">
+					<p class="pl-1 text-black">'.$i->item_name.' apple with some more text in a row <br> <small class="text-secondary">(₹ '.$i->item_price_customer.'/-)</small></p>
+				</div>
+				<div class="col-2 text-black">
+					<p class="">x '.$i->qty.' </p>
+				</div>
+				<div class="col-2 pl-0 text-black">
+					<p class="">₹'.$i->item_price_customer*$i->qty.'</p>
+				</div>
+			</div>
+			<br>';
+		}
 		$response.='
 				</div>
 				<div class="row mt-0 mx-0">
-					<mark class="col-sm-3 col-12 py-1">Amount: ₹'.$info->demand_amount.'/-</mark> 
+					<mark class="col-sm-3 col-12 py-1">Order amount: ₹'.$info->payable_amt.'/-</mark> 
 				</div>
 				<div class="row mt-1 px-0 mx-0">
-					<div class="col py-1">Customer remarks: '.$info->customer_remarks.'</div>
-				</div>
-				<div class="row mt-1 px-0 mx-0">
-					<div class="col py-1">Admin remarks: '.$info->admin_remarks.'</div>
+					<div class="col py-1">Additional notes: <span class="text-black">'.$info->additional_notes.'</span></div>
 				</div>
 				<div class="modal-footer px-0">
 					<button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
 				</div>
-				
 				';
 		echo $response;
-	
 	}
-	
-	// Rejectedorders (AJAX Modal)
-	public function rDemandDetails()
-	{
-		$demand=$this->fetch->userDemandDetails($this->input->post('id'));
-		$info=$this->fetch->getDemandInfo($this->input->post('id'));
-		$loc_info=$this->fetch->getInfoById('locations_master','id',$info->location_id);
-		// echo'<pre>';var_dump($list);exit;
-		$response='
-		<div class="row mx-0">
-			<p class="text-dark col-sm-5 pl-1"> Demand id. : <strong>'.$this->input->post('id').'</strong></p>
-			<p class="text-dark col-sm-7 text-sm-right pl-1 pl-sm-0">Demand date : '.date('d-M-Y',strtotime($info->created)).'</p>
-		</div>
-		<div class="row mx-0">
-			<p class="ml-1 text-dark">Status : <strong class="text-danger">'.$info->status.'</strong></p>
-		</div>
-		<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Name : '.$info->name.'</p>
-		</div>
-		<div class="row mx-0 pb-0 mb-0">
-			<p class="ml-1 text-dark">Contact no. : '.$info->phone_no.'</p>
-		</div>';
-		if($loc_info){
-			$response.='	<div class="row mx-0 pb-0 mb-0">
-					<p class="ml-1 text-dark">For location : '.$loc_info->area.', '.$loc_info->city.', '.$loc_info->state.' ('.$loc_info->pin_code.')</p>
-				</div>
-				<div class="row mx-0 pb-0 mb-0">
-					<p class="ml-1 text-dark">For address : '.$info->address.'</p>
-				</div>';
-		}
-		$response.='
-		<hr class="my-0">
-			<div class="row">
-				<div class="col-12 p-0 my-2 d-flex bg-dark py-1">
-					<div class="col-3 text-white"><strong>Item</strong></div>
-					<div class="col-4 text-white pl-sm-1 pl-0"><strong>Price</strong></div>
-					<div class="col-2 text-white pl-sm-1 pl-0"><strong>Qty</strong></div>
-					<div class="col-3 text-white"><strong>Total</strong></div>
-				</div>';
-		foreach($demand as $i){
-			$response.='
-						<div class="col-12 p-0 mb-1 d-flex">
-							<div class="col-3">'.$i->item_name.' -</div>
-							<div class="col-4 pl-sm-1 pl-0">₹'.$i->item_price_customer.'/'.$i->unit_short_name.'</div>
-							<div class="col-2 pl-sm-1 pl-0">'.$i->item_quantity.' '.$i->unit_short_name.' </div>
-							<div class="col-3">₹'.$i->item_price_customer*$i->item_quantity.'</div>
-						</div>';
-		}	
-		$response.='
-				</div>
-				<div class="row mt-0 mx-0">
-					<mark class="col-sm-3 col-12 py-1">Amount: ₹'.$info->demand_amount.'/-</mark> 
-				</div>
-				<div class="row mt-1 px-0 mx-0">
-					<div class="col py-1">Customer remarks: '.$info->customer_remarks.'</div>
-				</div>
-				<div class="row mt-1 px-0 mx-0">
-					<div class="col py-1">Admin remarks: '.$info->admin_remarks.'</div>
-				</div>
-				<div class="modal-footer px-0">
-					<button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-				</div>
-				
-				';
-		echo $response;
-	
-	}
+
 	
 	// User details (AJAX Modal)
 	public function userDetails()
