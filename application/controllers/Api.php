@@ -16,13 +16,19 @@ class Api extends MY_Controller {
 
     public function categories()
 	{
-        $data['store']=$this->api->getInfo('categories_master');
+        $data =$this->api->getInfo('categories_master');
         echo json_encode($data, JSON_PRETTY_PRINT);
     }
 
     public function category($id)
 	{
-        $data=$this->api->getInfoById('categories_master','id',$id);
+        $data=$this->db->select('*')
+                ->from('items_master')
+                // ->join('items_master i', 'i.id = od.item_id', 'LEFT')
+                // ->where('i.is_active','1')
+                ->where('category_id',$id)
+                ->get()
+                ->result();
         echo json_encode($data, JSON_PRETTY_PRINT);
     }
 
