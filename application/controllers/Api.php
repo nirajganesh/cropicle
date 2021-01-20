@@ -1,4 +1,9 @@
 <?php
+
+require_once (APPPATH.'libraries\razorpay\Razorpay.php');
+
+use Razorpay\Api\Api as RazorpayApi;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends MY_Controller {
@@ -7,6 +12,27 @@ class Api extends MY_Controller {
 		$this->load->model('ApiModel','api');
     }
 
+    public function razor()
+	{
+        $this->form_validation->set_rules('payable_amt', 'Amt', 'required');
+        if($this->form_validation->run() == true){
+            $razor = new RazorpayApi('rzp_test_b9bbROv33Dc5tc', 'mp1hUAwjGOoSp0iNy93qMQc0');
+            $razorpayOrder = $razor->order->create([
+                'amount'          => $this->input->post('payable_amt') * 100, 
+                'currency'        => 'INR',
+                'payment_capture' => 1, 
+            ]);
+            if($razorpayOrder['id']){
+                echo $razorpayOrder['id'];
+            }
+            else{
+                echo 'error';
+            }
+        }
+        else{
+            echo 'form_error';
+        }
+    }
 
     public function items()
 	{
