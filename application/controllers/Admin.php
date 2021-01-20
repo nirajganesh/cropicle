@@ -254,7 +254,7 @@ class Admin extends MY_Controller {
 			<div class="col-sm-7">
 				<p class="text-dark">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
 				<p class="text-dark">
-					Address : '.$info->street.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
+					Address : '.$info->house_no.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
 				</p>
 			</div>
 		</div>
@@ -310,7 +310,7 @@ class Admin extends MY_Controller {
 			<div class="col-sm-7">
 				<p class="text-dark">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
 				<p class="text-dark">
-					Address : '.$info->street.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
+					Address : '.$info->house_no.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
 				</p>
 			</div>
 		</div>
@@ -378,7 +378,7 @@ class Admin extends MY_Controller {
 			<div class="col-sm-7">
 				<p class="text-dark">Order date : '.date('d-M-Y',strtotime($info->date)).'</p>
 				<p class="text-dark">
-					Address : '.$info->street.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
+					Address : '.$info->house_no.', '.$info->landmark.', '.$info->city.', '.$info->state.' (pincode - '.$info->pincode.')
 				</p>
 			</div>
 		</div>
@@ -450,7 +450,7 @@ class Admin extends MY_Controller {
 		if($user_address){
 			$response.='
 				<div class="row mx-0 pb-0 mb-0">
-					<p class="text-dark">Address : <strong class="text-dark"> '.$user_address->street.', '.$user_address->landmark.', '.$user_address->city.', '.$user_address->state.' ('.$user_address->pin_code.')</strong></p>
+					<p class="text-dark">Address : <strong class="text-dark"> '.$user_address->house_no.', '.$user_address->landmark.', '.$user_address->city.', '.$user_address->state.' ('.$user_address->pin_code.')</strong></p>
 				</div>'
 			;
 		}

@@ -31,6 +31,11 @@ class ApiModel extends CI_Model{
         return $this->db->get($table)->result();
     }
 
+    public function getActive($table)
+    {
+        return $this->db->where('is_active','1')->get($table)->result();
+    }
+
     public function getUser($id)
     {
         $res=$this->db->select('u.*, ui.*')
@@ -48,6 +53,33 @@ class ApiModel extends CI_Model{
     {
         $this->db->where($column, $id);
         return $this->db->get($table)->row();
+    }
+
+    public function getInfoArrById($table,$column,$id)
+    {
+        $this->db->where($column, $id);
+        return $this->db->get($table)->result();
+    }
+
+    public function saveInfo($table,$d)
+    {
+        if(!empty($d)){
+            $this->db->insert($table,$d);
+            return $this->db->insert_id();
+        }
+		return false;
+    }
+
+    public function updateInfoById($tbl,$data,$col,$key)
+    {
+        $this->db->where($col,$key);
+        $wpflag = $this->db->update($tbl,$data);
+        if($wpflag){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
 

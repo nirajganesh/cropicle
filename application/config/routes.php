@@ -83,6 +83,7 @@ $route['orders/pending'] = 'Admin/ordersPending';
 $route['orders/approved'] = 'Admin/ordersApproved';
 $route['orders/rejected'] = 'Admin/ordersRejected';
 $route['set-delivered/(:num)'] = 'EditAdm/setDelivered/$1';
+$route['toggle-user-status/(:num)/(:num)'] = 'EditAdm/userStatus/$1/$2';
 
 $route['reports'] = 'Reports';
 

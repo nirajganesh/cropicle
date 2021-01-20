@@ -153,9 +153,7 @@ class Add extends MY_Controller {
             }
                 return $slug;
         }
-          
-
-        
+  
 
 
 }
