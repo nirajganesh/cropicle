@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2021 at 08:58 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.8
+-- Generation Time: Jan 20, 2021 at 07:13 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -56,7 +56,10 @@ CREATE TABLE `categories_master` (
 --
 
 INSERT INTO `categories_master` (`id`, `category_name`, `img_src`, `is_active`, `created`, `modified`) VALUES
-(1, 'Fruits', 'veg.jpg', 1, '2020-06-30 09:55:48', '2020-09-01 01:46:12');
+(1, 'Fruits', 'fruits_cartoon_image__1_-removebg-preview.png', 1, '2020-06-30 09:55:48', '2021-01-18 00:57:48'),
+(2, 'Vegetable', 'vegetable_cartoon_image-removebg-preview.png', 1, '2021-01-16 10:21:36', '2021-01-18 00:58:31'),
+(7, 'Bakery', 'bakery_image-removebg-preview.png', 1, '2021-01-18 05:29:03', '2021-01-18 05:29:03'),
+(8, 'Drink', 'drink_image-removebg-preview_(1).png', 1, '2021-01-18 05:29:18', '2021-01-18 05:29:18');
 
 -- --------------------------------------------------------
 
@@ -88,8 +91,8 @@ CREATE TABLE `items_master` (
   `item_name` varchar(100) NOT NULL,
   `item_img` varchar(500) NOT NULL,
   `unit_id` int(11) DEFAULT 1,
-  `item_price_kart` varchar(100) DEFAULT NULL,
-  `item_price_customer` varchar(100) NOT NULL,
+  `item_price_kart` float DEFAULT NULL,
+  `item_price_customer` float NOT NULL,
   `is_active` int(11) NOT NULL DEFAULT 1,
   `is_deleted` int(11) NOT NULL DEFAULT 0,
   `category_active` int(11) NOT NULL DEFAULT 1,
@@ -102,19 +105,20 @@ CREATE TABLE `items_master` (
 --
 
 INSERT INTO `items_master` (`id`, `category_id`, `max_order_qty`, `item_name`, `item_img`, `unit_id`, `item_price_kart`, `item_price_customer`, `is_active`, `is_deleted`, `category_active`, `created_at`, `updated_at`) VALUES
-(1, 1, '8', 'Apple', 'apple.jpg', 3, '170', '180', 1, 0, 1, '2020-06-30 07:41:52', '2020-12-22 01:30:42'),
-(2, 1, '8', 'Potato', 'potato.jpeg', 1, '20', '30', 1, 0, 1, '2020-06-30 07:41:52', '2020-07-17 09:39:30'),
-(3, 1, '8', 'Tomato', 'tomato.jpg', 1, '25', '40', 1, 0, 1, '2020-06-30 07:42:30', '2020-07-17 09:44:52'),
-(5, 1, '2', 'Coriander', 'Coriander.jpg', 4, '15', '20', 1, 0, 1, '2020-06-30 07:43:07', '2020-07-17 09:40:16'),
-(6, 1, '5', 'Carrot', 'carrots.jpg', 1, '40', '45', 1, 0, 1, '2020-06-30 07:43:07', '2020-07-17 09:39:40'),
-(7, 1, '4', 'Grapes', 'grapes.jpg', 1, '80', '90', 1, 0, 1, '2020-06-30 07:43:59', '2020-07-17 09:45:20'),
-(8, 1, '5', 'Banana', 'defaultItem.jpg', 1, '30', '40', 0, 0, 1, '2020-06-30 07:43:59', '2020-12-22 01:36:29'),
-(9, 1, '8', 'Onion', 'Onion.jpg', 1, '60', '80', 1, 0, 1, '2020-06-30 07:44:51', '2020-07-17 09:39:51'),
-(10, 1, '5', 'Watermelon', 'watermelon.jpg', 1, '40', '45', 1, 0, 1, '2020-06-30 07:44:51', '2020-06-30 07:44:51'),
-(11, 1, '3', 'Ginger', 'ginger.jpg', 1, '90', '120', 0, 0, 1, '2020-06-30 07:45:29', '2020-09-18 06:32:15'),
-(12, 1, '3', 'Garlic', 'garlic.jpg', 1, '50', '80', 1, 0, 1, '2020-06-30 07:45:29', '2020-07-17 09:45:52'),
-(17, 2, '10', 'Marigold', 'defaultItem.jpg', 1, '30', '50', 1, 0, 1, '2020-08-31 13:56:59', '2020-12-22 01:15:07'),
-(23, 1, '8', 'Gold - 1gm', 'defaultItem.jpg', 1, NULL, '5100', 1, 0, 1, '2021-01-15 07:47:16', '2021-01-15 03:18:23');
+(1, 1, '8', 'Apple', 'apple.jpg', 3, 170, 180, 0, 0, 1, '2020-06-30 07:41:52', '2020-12-22 01:30:42'),
+(2, 1, '8', 'Potato', 'potato.jpeg', 1, 20, 30, 1, 0, 1, '2020-06-30 07:41:52', '2020-07-17 09:39:30'),
+(3, 1, '8', 'Tomato', 'tomato.jpg', 1, 25, 40, 1, 0, 1, '2020-06-30 07:42:30', '2020-07-17 09:44:52'),
+(5, 1, '2', 'Coriander', 'Coriander.jpg', 4, 15, 20, 1, 0, 1, '2020-06-30 07:43:07', '2020-07-17 09:40:16'),
+(6, 1, '5', 'Carrot', 'carrots.jpg', 1, 40, 45, 1, 0, 1, '2020-06-30 07:43:07', '2020-07-17 09:39:40'),
+(7, 1, '4', 'Grapes', 'grapes.jpg', 1, 80, 90, 1, 0, 1, '2020-06-30 07:43:59', '2020-07-17 09:45:20'),
+(8, 1, '5', 'Banana', 'banana-removebg-preview.png', 1, 30, 40, 1, 0, 1, '2020-06-30 07:43:59', '2021-01-18 01:00:58'),
+(9, 1, '8', 'Onion', 'Onion.jpg', 1, 60, 80, 1, 0, 1, '2020-06-30 07:44:51', '2020-07-17 09:39:51'),
+(10, 1, '5', 'Watermelon', 'watermelon.jpg', 1, 40, 45, 1, 0, 1, '2020-06-30 07:44:51', '2020-06-30 07:44:51'),
+(11, 1, '3', 'Ginger', 'ginger.jpg', 1, 90, 120, 1, 0, 1, '2020-06-30 07:45:29', '2021-01-18 02:14:53'),
+(12, 1, '3', 'Garlic', 'garlic.jpg', 1, 50, 80, 1, 0, 1, '2020-06-30 07:45:29', '2020-07-17 09:45:52'),
+(17, 2, '10', 'Marigold', 'defaultItem.jpg', 1, 30, 50, 1, 0, 1, '2020-08-31 13:56:59', '2020-12-22 01:15:07'),
+(23, 1, '8', 'Gold - 1gm', 'defaultItem.jpg', 1, NULL, 5100, 1, 0, 1, '2021-01-15 07:47:16', '2021-01-15 03:18:23'),
+(24, 7, '9', 'Cookies', 'bakery_cookies-removebg-preview.png', 1, NULL, 50, 1, 0, 1, '2021-01-18 05:33:08', '2021-01-18 05:33:08');
 
 -- --------------------------------------------------------
 
@@ -176,8 +180,10 @@ CREATE TABLE `orders` (
   `coupon_id` int(11) DEFAULT NULL,
   `coupon_disc` varchar(500) DEFAULT NULL,
   `payable_amt` varchar(500) NOT NULL,
-  `date` date NOT NULL,
-  `street` varchar(500) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `mobile_no` varchar(100) NOT NULL,
+  `house_no` varchar(500) NOT NULL,
   `landmark` varchar(500) NOT NULL,
   `city` varchar(200) NOT NULL,
   `state` varchar(200) NOT NULL,
@@ -195,8 +201,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `total_no_of_items`, `total_amt`, `coupon_id`, `coupon_disc`, `payable_amt`, `date`, `street`, `landmark`, `city`, `state`, `pincode`, `additional_notes`, `payment_type`, `status`, `admin_remarks`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 1, '2', '425', 0, NULL, '425', '2021-01-15', 'bhudhapara', 'share khan office', 'Raipur', 'CG', '492001', 'nothing', 'cash', 'PENDING', 'Some reason', 0, '2021-01-15 06:17:19', '2021-01-15 06:17:19');
+INSERT INTO `orders` (`id`, `user_id`, `total_no_of_items`, `total_amt`, `coupon_id`, `coupon_disc`, `payable_amt`, `date`, `name`, `mobile_no`, `house_no`, `landmark`, `city`, `state`, `pincode`, `additional_notes`, `payment_type`, `status`, `admin_remarks`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, '2', '425', 0, NULL, '425', '2021-01-15', '', '', 'bhudhapara', 'share khan office', 'Raipur', 'CG', '492001', 'nothing', 'cash', 'REJECTED', 'Nahi bataunga', 0, '2021-01-15 06:17:19', '2021-01-15 06:17:19'),
+(31, 44, '3', '405', NULL, NULL, '405', '19-01-2021', 'ramesh,', '7999107995', '101,', 'kushalpur', 'Raipur', 'Chhattisgarh', '492001', 'mast', 'COD', 'REJECTED', '', 0, '2021-01-19 12:16:41', '2021-01-19 12:16:41'),
+(32, 44, '2', '360', NULL, NULL, '360', '20-01-2021', 'Raju', '7999107995', '101', 'kushalpur', 'Raipur', 'Chhattisgarh', '492001', 'Nice', 'COD', 'PENDING', '', 0, '2021-01-20 05:01:04', '2021-01-20 05:01:04');
 
 -- --------------------------------------------------------
 
@@ -220,7 +228,12 @@ CREATE TABLE `order_details` (
 
 INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `qty`, `item_price_customer`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, '1', '160', '2021-01-15 12:26:24', '2021-01-15 12:26:24'),
-(2, 1, 2, '3', '40', '2021-01-15 12:26:24', '2021-01-15 12:26:24');
+(2, 1, 2, '3', '40', '2021-01-15 12:26:24', '2021-01-15 12:26:24'),
+(122, 31, 2, '4', '30', '2021-01-19 12:16:41', '2021-01-19 12:16:41'),
+(123, 31, 6, '1', '45', '2021-01-19 12:16:41', '2021-01-19 12:16:41'),
+(124, 31, 9, '3', '80', '2021-01-19 12:16:41', '2021-01-19 12:16:41'),
+(125, 32, 2, '4', '30', '2021-01-20 05:01:04', '2021-01-20 05:01:04'),
+(126, 32, 9, '3', '80', '2021-01-20 05:01:04', '2021-01-20 05:01:04');
 
 -- --------------------------------------------------------
 
@@ -316,7 +329,9 @@ INSERT INTO `users` (`id`, `login_oauth_uid`, `role_id`, `name`, `mobile_no`, `p
 (1, NULL, 1, 'Admin', '8888888888', '$2y$10$IenBYZcELmjIdfY1i8cuv.AOOqHDi713h51w0hL.JvcFji4FdHBVi', 1, '', 1, 1, '2020-07-06 05:22:59', '2020-07-06 05:22:59'),
 (13, NULL, 3, 'Ankur', '7894561230', '$2y$10$LHKBCjBcqoxtFJmODWwmAeP0QQnsW4a4FhqSNpTXXvVbUorsWiuiO', 1, '', 1, 1, '2020-07-27 10:23:16', '2020-08-06 05:19:30'),
 (14, NULL, 2, 'Kart Ankur', '7894561231', '$2y$10$hPwNXEQkmA0KDArcp3AmZOMmIe0hjZ6rUSodQdH0QyMJFzdVgjYGG', 0, '', 0, 1, '2020-07-27 10:30:17', '2020-08-06 05:19:09'),
-(40, '100529833051623983135', 3, 'Ankur Agrawal', '4444444441', '', 0, '', 0, 1, '2020-07-31 10:29:16', '2021-01-15 03:24:03');
+(40, '100529833051623983135', 3, 'Ankur Agrawal', '4444444441', '', 0, '', 0, 1, '2020-07-31 10:29:16', '2021-01-15 03:24:03'),
+(42, NULL, 3, 'name_intent', '6549873210', '$2y$10$kFWXuBf975Q2oW0qQytJuu13n8ub6mEEYwqNS7dTxoYldvvm1cFDS', 1, '', 0, 1, '2021-01-18 08:00:24', '2021-01-18 08:00:24'),
+(44, NULL, 3, 'Kamlesh', '7999107995', '$2y$10$VekZXpdEOLcpso.uesUxOuTA3CIdQBBCPa7HVdmgS3V5HrOFjf8wm', 1, '', 0, 1, '2021-01-18 10:11:30', '2021-01-19 08:30:26');
 
 -- --------------------------------------------------------
 
@@ -327,15 +342,25 @@ INSERT INTO `users` (`id`, `login_oauth_uid`, `role_id`, `name`, `mobile_no`, `p
 CREATE TABLE `user_address` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `street` varchar(500) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `mobile_no` varchar(100) NOT NULL,
+  `house_no` varchar(500) NOT NULL,
   `landmark` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
   `state` varchar(100) NOT NULL,
   `pincode` varchar(100) NOT NULL,
   `is_default` tinyint(4) NOT NULL DEFAULT 1,
-  `created_at` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_address`
+--
+
+INSERT INTO `user_address` (`id`, `user_id`, `name`, `mobile_no`, `house_no`, `landmark`, `city`, `state`, `pincode`, `is_default`, `created_at`, `updated_at`) VALUES
+(4, 44, 'Pa', '7999107995', '101', 'kushalpur', 'Raipur', 'Chhattisgarh', '492001', 1, '2021-01-18 11:32:59', '2021-01-18 11:32:59'),
+(5, 44, 'Ganesh', '8889358492', '103', 'Kushalpur', 'Raipur', 'Chhattisgarh', '492001', 1, '2021-01-18 12:24:06', '2021-01-18 12:24:06');
 
 -- --------------------------------------------------------
 
@@ -349,8 +374,6 @@ CREATE TABLE `user_info` (
   `device_token` text DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `profile_img` varchar(500) NOT NULL DEFAULT 'defaultUserImage.png',
-  `location_id` int(11) NOT NULL,
-  `address_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -359,10 +382,12 @@ CREATE TABLE `user_info` (
 -- Dumping data for table `user_info`
 --
 
-INSERT INTO `user_info` (`id`, `user_id`, `device_token`, `email`, `profile_img`, `location_id`, `address_id`, `created_at`, `updated_at`) VALUES
-(8, 1, '', '', 'user.png', 1, 0, '2020-07-27 10:23:29', '2020-08-04 11:24:49'),
-(9, 14, '', '', 'defaultUserImage.png', 1, 0, '2020-07-27 10:30:17', '2020-07-27 10:32:49'),
-(21, 40, '', '', 'user.png', 2, 0, '2020-07-31 13:59:16', '2020-09-15 11:03:41');
+INSERT INTO `user_info` (`id`, `user_id`, `device_token`, `email`, `profile_img`, `created_at`, `updated_at`) VALUES
+(8, 1, '', '', 'user.png', '2020-07-27 10:23:29', '2020-08-04 11:24:49'),
+(9, 14, '', '', 'defaultUserImage.png', '2020-07-27 10:30:17', '2020-07-27 10:32:49'),
+(21, 40, '', '', 'user.png', '2020-07-31 13:59:16', '2020-09-15 11:03:41'),
+(23, 42, 'phoneintent', 'email_intent', 'defaultUserImage.png', '2021-01-18 08:00:25', '2021-01-18 08:00:25'),
+(25, 44, 'djETwySZRvCKeTpde3mV7y:APA91bHooPSQJAxxiiIhUiZmldO_1VsaS3nNkI0Qly7U-bKst-LdO4nocSLBK-YdQdHiFXN7M-NlarfMyO4i3eDc6k3gcVTzk8eb7glf_aK6KvQX4pnZz6T9lieJ2b3Kc2onLVQDhQ2w', 'dundun@gmail.com', 'defaultUserImage.png', '2021-01-18 10:11:30', '2021-01-18 10:11:30');
 
 -- --------------------------------------------------------
 
@@ -391,7 +416,12 @@ CREATE TABLE `user_sessions` (
 
 INSERT INTO `user_sessions` (`id`, `user_id`, `role_id`, `login_time`, `logout_time`, `is_logged_in`, `ip_address`, `is_active`, `created`, `modified`, `created_by`, `modified_by`) VALUES
 (116, 1, 1, '2021-01-15 01:19:01', NULL, 1, '::1', 0, 0, 0, 0, 0),
-(117, 1, 1, '2021-01-16 00:41:09', NULL, 1, '::1', 0, 0, 0, 0, 0);
+(117, 1, 1, '2021-01-16 00:41:09', NULL, 1, '::1', 0, 0, 0, 0, 0),
+(118, 1, 1, '2021-01-16 06:00:53', NULL, 1, '::1', 0, 0, 0, 0, 0),
+(119, 1, 1, '2021-01-16 06:06:22', NULL, 1, '::1', 0, 0, 0, 0, 0),
+(120, 1, 1, '2021-01-18 00:57:23', NULL, 1, '::1', 0, 0, 0, 0, 0),
+(121, 1, 1, '2021-01-19 07:47:14', NULL, 1, '::1', 0, 0, 0, 0, 0),
+(122, 1, 1, '2021-01-20 00:31:46', NULL, 1, '::1', 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -489,7 +519,7 @@ ALTER TABLE `banner`
 -- AUTO_INCREMENT for table `categories_master`
 --
 ALTER TABLE `categories_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -501,7 +531,7 @@ ALTER TABLE `coupons`
 -- AUTO_INCREMENT for table `items_master`
 --
 ALTER TABLE `items_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `locations_master`
@@ -519,13 +549,13 @@ ALTER TABLE `notice_ribbon`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `units`
@@ -537,25 +567,25 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `user_address`
 --
 ALTER TABLE `user_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_sessions`
 --
 ALTER TABLE `user_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
