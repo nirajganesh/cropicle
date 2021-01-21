@@ -12,11 +12,11 @@ class Api extends MY_Controller {
 		$this->load->model('ApiModel','api');
     }
 
-    public function razor()
+    public function razorpay()
 	{
         $this->form_validation->set_rules('payable_amt', 'Amt', 'required');
         if($this->form_validation->run() == true){
-            $razor = new RazorpayApi('rzp_test_b9bbROv33Dc5tc', 'mp1hUAwjGOoSp0iNy93qMQc0');
+            $razor = new RazorpayApi('rzp_test_zieAI4uofatoLI', 'x8zezITJNtvYRD1jFIrTMCIG');
             $razorpayOrder = $razor->order->create([
                 'amount'          => $this->input->post('payable_amt') * 100, 
                 'currency'        => 'INR',
@@ -128,6 +128,18 @@ class Api extends MY_Controller {
             else{
                 echo 'error';
             }
+        }
+    }
+
+    public function check_number()
+	{
+        // var_dump($this->input->post());exit;
+        $count=$this->api->getInfoById('users','mobile_no',$this->input->post('mobile_no'));
+        if($count){
+            echo 'present';
+        }
+        else{
+            echo 'true';
         }
     }
 
@@ -361,27 +373,16 @@ class Api extends MY_Controller {
 
     public function profile_update_image()
     {
-        var_dump($this->input->post());exit;
+        // var_dump($this->input->post());exit;
         $imagename = 'defaultUserImagedata.png';
-        if( $_FILES['img']['name']!=null ){
-           
-            $path ='assets/Images';
-            $initialize = array(
-                "upload_path" => $path,
-                "allowed_types" => "jpg|jpeg|png|bmp",
-                "remove_spaces" => TRUE
-            );
-            $this->load->library('upload', $initialize);
-            if (!$this->upload->do_upload('img')) {
-                echo 'error_uploading';
-            }
-            else {
-                $imgdata = $this->upload->data();
-                $imagename = $imgdata['file_name'];
-            } 
+        if( $_POST['img']!=null ){
+            $imagename='user'. $_POST['uid'].'_'.date('YmdHis').'.png';
+            $image_base64 = base64_decode($_POST['img']);
+            $file = 'assets/images/users/'.$imagename;
+            file_put_contents($file, $image_base64);
         }
         $data['profile_img']=$imagename;
-        $status= $this->api->updateInfoById('users_info',$data,'user_id',$this->input->post('user_id'));
+        $status= $this->api->updateInfoById('user_info',$data,'user_id',$this->input->post('uid'));
         if($status){
             echo 'true';
         }
@@ -424,6 +425,64 @@ class Api extends MY_Controller {
                     
                     $oid2=$this->api->saveInfo('order_details',$input2);
                 }
+                echo $oid;
+            }
+            else{
+                echo 'error';
+            }
+        }
+        else{
+            echo 'error';
+        }
+    }
+    
+    public function prepaid_order()
+	{
+    //    var_dump($this->input->post());exit;
+        $this->form_validation->set_rules('house_no', 'House no.', 'required');
+        $this->form_validation->set_rules('landmark', 'Landmark', 'required');
+        $this->form_validation->set_rules('mobile_no', 'Phone', 'required|min_length[10]|max_length[10]');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('city', 'City', 'required');
+        $this->form_validation->set_rules('state', 'State', 'required');
+        $this->form_validation->set_rules('pincode', 'Pincode', 'required|min_length[6]|max_length[6]');
+        $this->form_validation->set_rules('user_id', 'User_id', 'required');
+        $this->form_validation->set_rules('payment_type', 'Payment_type', 'required');
+        $this->form_validation->set_rules('total_amt', 'Total', 'required');
+        $this->form_validation->set_rules('additional_notes', 'Remark', 'required');
+        $this->form_validation->set_rules('api_signature', 'Sig', 'required');
+        $this->form_validation->set_rules('api_payment_id', 'Pay id', 'required');
+        $this->form_validation->set_rules('api_order_id', 'Order id', 'required');
+        
+        if($this->form_validation->run() == true){
+            $inputs=$this->input->post();
+            $items=json_decode($this->input->post('json'));
+            $inputs['total_no_of_items']=count($items);
+            $inputs['status']='PENDING';
+            $inputs['date']=date('d-m-Y');
+            unset($inputs['json']);
+            unset($inputs['api_signature']);
+            unset($inputs['api_payment_id']);
+            unset($inputs['api_order_id']);
+            $oid=$this->api->saveInfo('orders',$inputs);
+            if($oid){
+                foreach($items as $itm){
+                    $input2=array();
+                    $input2['order_id']=$oid;
+                    $input2['item_id']=$itm->productid;
+                    $input2['qty']=$itm->productquantity;
+                    $input2['item_price_customer']=$itm->productprice;
+                    
+                    $oid2=$this->api->saveInfo('order_details',$input2);
+                }
+
+                $input3['order_id']=$oid;
+                $input3['api_signature']=$this->input->post('api_signature');
+                $input3['api_payment_id']=$this->input->post('api_payment_id');
+                $input3['api_order_id']=$this->input->post('api_order_id');
+                $input3['date']=date('d-m-Y');
+                $input3['status']='PAID';
+                $oid3=$this->api->saveInfo('payment_details',$input3);
                 echo $oid;
             }
             else{

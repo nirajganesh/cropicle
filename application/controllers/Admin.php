@@ -430,7 +430,7 @@ class Admin extends MY_Controller {
 		// echo'<pre>';var_dump($list);exit;
 		$response='
 		<div class="row mx-0">
-			<img clas="pl-1" src="'.MAIN_DOMAIN.'assets/images/'.$user_info->profile_img.'" height="60" width="60" alt="img" style="object-fit:cover;">
+			<img clas="pl-1" src="'.MAIN_DOMAIN.'assets/images/users/'.$user_info->profile_img.'" height="60" width="60" alt="img" style="object-fit:cover;">
 		</div>
 		<div class="row mx-0 mt-2">
 			<p class="">User id : <strong class="text-dark">'.$user->id.'</strong></p>
@@ -450,7 +450,7 @@ class Admin extends MY_Controller {
 		if($user_address){
 			$response.='
 				<div class="row mx-0 pb-0 mb-0">
-					<p class="text-dark">Address : <strong class="text-dark"> '.$user_address->house_no.', '.$user_address->landmark.', '.$user_address->city.', '.$user_address->state.' ('.$user_address->pin_code.')</strong></p>
+					<p class="text-dark">Address : <strong class="text-dark"> '.$user_address->house_no.', '.$user_address->landmark.', '.$user_address->city.', '.$user_address->state.' ('.$user_address->pincode.')</strong></p>
 				</div>'
 			;
 		}
